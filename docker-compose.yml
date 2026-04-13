@@ -67,6 +67,7 @@ services:
         supplementaries-squared
         terralith
         toms-storage
+        easy-tpa
         waystones
 
       # — Datapacks (Fabric-only mods that ship as server-side datapacks) —
