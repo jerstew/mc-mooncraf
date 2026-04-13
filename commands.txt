@@ -1,0 +1,79 @@
+MOONCRAF SERVER — USEFUL COMMANDS
+==================================
+
+All commands assume you are in the docker/mooncraf/ directory.
+  cd /home/linuxuser/docker/mooncraf
+
+
+--- DOCKER STATUS ---
+
+# List running containers
+docker ps
+
+# List all containers (including stopped)
+docker ps -a
+
+# Show resource usage (CPU, RAM, etc.)
+docker stats mc_server
+
+
+--- LOGS ---
+
+# Follow live server logs (Ctrl+C to stop)
+docker logs -f mc_server
+
+# Show last N lines of logs
+docker logs --tail 100 mc_server
+
+# Show logs with timestamps
+docker logs -f --timestamps mc_server
+
+
+--- START / STOP / RESTART ---
+
+# Start the server (first time or after a stop)
+docker compose up -d
+
+# Stop the server gracefully
+docker compose down
+
+# Restart the server (e.g. after config changes)
+docker compose restart
+
+# Force recreate the container from scratch (pulls fresh image, re-downloads mods)
+docker compose up -d --force-recreate
+
+
+--- SERVER CONSOLE ---
+
+# Attach to the interactive server console (Ctrl+P then Ctrl+Q to detach)
+docker attach mc_server
+
+# Run a single server command without attaching
+docker exec mc_server rcon-cli <command>
+
+# Examples:
+docker exec mc_server rcon-cli list
+docker exec mc_server rcon-cli say Hello everyone!
+docker exec mc_server rcon-cli stop
+
+
+--- UPDATING ---
+
+# Pull the latest server image
+docker compose pull
+
+# Apply the update (recreates the container)
+docker compose up -d --force-recreate
+
+
+--- TROUBLESHOOTING ---
+
+# Inspect the container config/environment
+docker inspect mc_server
+
+# Open a shell inside the container
+docker exec -it mc_server bash
+
+# Check the compose config is valid
+docker compose config

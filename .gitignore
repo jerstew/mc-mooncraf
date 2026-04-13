@@ -1,0 +1,37 @@
+# Runtime and generated server data
+.env
+data/.cache/
+data/.modrinth-manifest.json
+data/.neoforge-manifest.json
+data/crash-reports/
+data/dynamic-data-pack-cache/
+data/libraries/
+data/logs/
+data/mods/
+data/usercache.json
+data/usernamecache.json
+data/world/
+
+# Datapacks and generated pack content are better handled by backups/build steps
+data/datapacks/
+data/moonlight-global-datapacks/
+
+# Local helper/env files
+data/.rcon-cli.env
+data/.rcon-cli.yaml
+data/.run-neoforge.env
+data/run.bat
+data/run.sh
+
+# Pokemon Showdown runtime/app data; keep its config files trackable
+data/showdown/data/
+data/showdown/index.js
+data/showdown/lib/
+data/showdown/server/
+data/showdown/sim/
+data/showdown/tools/
+data/showdown/translations/
+data/showdown/config/*.map
+
+# Generated profiler scratch data
+data/config/spark/tmp-client/

@@ -1,0 +1,82 @@
+services:
+  mc:
+    image: itzg/minecraft-server:java21
+    container_name: mc_server
+    tty: true
+    stdin_open: true
+    environment:
+      EULA: "true"
+      VERSION: "1.21.1"
+      TYPE: NEOFORGE
+
+      # — Identity —
+      MOTD: "and we're playing minecraft"
+      ICON: "https://i.imgur.com/m7JSRql.png"
+      LEVEL: "world"
+
+      # — Access —
+      OPS: "daddyfatsweater,FRlENDSHRIMP,MegaChung,Jerbearito,TrainsChug"
+      RCON_PASSWORD: "${RCON_PASSWORD:?set RCON_PASSWORD in .env}"
+      SERVER_PORT: 25565
+      RCON_PORT: 25576
+
+      # — Performance (8 GB host RAM; 7 G allocated to JVM) —
+      MEMORY: 7G
+      USE_AIKAR_FLAGS: "true"
+      JVM_XX_OPTS: "-XX:ActiveProcessorCount=3"
+      MAX_TICK_TIME: "-1"
+      VIEW_DISTANCE: 12
+      SIMULATION_DISTANCE: 6
+      ENABLE_ROLLING_LOGS: "true"
+
+      # — Mods (auto-downloaded from Modrinth on first start) —
+      # MODRINTH_DOWNLOAD_DEPENDENCIES: required pulls hard deps automatically.
+      # Add or remove slugs freely; pin a version with slug:version-id if needed.
+      MODRINTH_DOWNLOAD_DEPENDENCIES: required
+      REMOVE_OLD_MODS: "true"
+      MODRINTH_PROJECTS: |-
+        appleskin
+        attributefix
+        bellsandwhistles
+        carry-on
+        clumps
+        cobblefurnies
+        cobblemon
+        cobblemon-fight-or-flight-reborn
+        cobblemonextras
+        create
+        createaddition
+        create-connected
+        create-deco
+        ferrite-core
+        gravestone-mod
+        interiors
+        jade
+        jei:beta
+        lithium
+        lootr
+        modernfix
+        more-cobblemon-tweaks
+        no-chat-reports
+        noisium
+        simple-voice-chat
+        sophisticated-backpacks
+        spark
+        structure-layout-optimizer
+        supplementaries
+        supplementaries-squared
+        terralith
+        toms-storage
+        waystones
+
+      # — Datapacks (Fabric-only mods that ship as server-side datapacks) —
+      MODRINTH_DATAPACKS: |-
+        cobblemon-additions
+
+    ports:
+      - "25565:25565"
+      - "25576:25576"
+      - "24454:24454/udp"
+    volumes:
+      - ./data:/data
+    restart: unless-stopped

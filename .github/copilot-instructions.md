@@ -1,0 +1,8 @@
+# Mooncraf Copilot instructions
+
+Use [AGENTS.md](AGENTS.md) as the canonical source of repository instructions.
+
+- Never stop, restart, recreate, attach to, or otherwise touch the running Minecraft server or Docker container unless the user explicitly asks.
+- Assume players may be online and prefer read-only inspection when runtime impact is uncertain.
+- Keep secrets in a local `.env` file and do not commit them to Git.
+- Version-control compose files and durable admin/config files, not world data or other runtime-generated files.
