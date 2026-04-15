@@ -20,8 +20,8 @@ services:
       SERVER_PORT: 25565
       RCON_PORT: 25576
 
-      # — Performance (8 GB host RAM; 7 G allocated to JVM) —
-      MEMORY: 7G
+      # — Performance (8 GB host RAM; 6 G allocated to JVM) —
+      MEMORY: 6G
       USE_AIKAR_FLAGS: "true"
       JVM_XX_OPTS: "-XX:ActiveProcessorCount=3"
       MAX_TICK_TIME: "-1"
@@ -39,6 +39,7 @@ services:
         attributefix
         bellsandwhistles
         carry-on
+        chunky
         clumps
         cobblefurnies
         cobblemon
@@ -69,6 +70,14 @@ services:
         toms-storage
         easy-tpa
         waystones
+        xaeros-world-map
+        xaeros-minimap
+
+      # — CurseForge mods (requires CF_API_KEY in .env) —
+      CF_API_KEY: "${CF_API_KEY:?set CF_API_KEY in .env}"
+      CURSEFORGE_FILES: |-
+        radical-cobblemon-trainers-api
+        rctmod
 
       # — Datapacks (Fabric-only mods that ship as server-side datapacks) —
       MODRINTH_DATAPACKS: |-
