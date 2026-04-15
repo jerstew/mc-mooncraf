@@ -103,7 +103,12 @@ services:
         condition: service_healthy
     environment:
       BACKUP_METHOD : "restic"
-      # RCON Configuration (if needed)
+      RESTIC_REPOSITORY: "${RESTIC_REPOSITORY:?set RESTIC_REPOSITORY in .env}"
+      RESTIC_PASSWORD: aYhxM%!%3pc%DNy8F%C&3S
+      # RESTIC_HOSTNAME: mc_server
+      RESTIC_ADDITIONAL_TAGS: mc_backups world backups neoforge  # Customize tags for filtering
+      # PRUNE_RESTIC_RETENTION: # Optional, set your retention policy (see Restic docs)
+
       RCON_HOST: mc
       RCON_PASSWORD: "${RCON_PASSWORD:?set RCON_PASSWORD in .env}"
       # since this service waits for mc to be healthy, no initial delay is needed
@@ -112,17 +117,9 @@ services:
       # Backup Interval
       BACKUP_INTERVAL: "3h"
 
-      # Restic Configuration
-      RESTIC_REPOSITORY: "${RESTIC_REPOSITORY:?set RESTIC_REPOSITORY in .env}"
-      RESTIC_PASSWORD: aYhxM%!%3pc%DNy8F%C&3S
-      # RESTIC_HOSTNAME: mc_server
-      RESTIC_ADDITIONAL_TAGS: mc_backups world backups neoforge  # Customize tags for filtering
-      # PRUNE_RESTIC_RETENTION: # Optional, set your retention policy (see Restic docs)
-
       # S3 Configuration for Vultr
       AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID:?set AWS_ACCESS_KEY_ID in .env}"
       AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY:?set AWS_SECRET_ACCESS_KEY in .env}"
       S3_ENDPOINT: "${S3_ENDPOINT:?set S3_ENDPOINT in .env}"
-
     volumes:
       - ./data:/data:ro
