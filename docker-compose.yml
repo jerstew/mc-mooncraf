@@ -15,7 +15,7 @@ services:
       LEVEL: "world"
 
       # — Access —
-      OPS: "daddyfatsweater,FRlENDSHRIMP,MegaChung,Jerbearito,TrainsChug"
+      OPS: "${MODS:?set MODS in .env}"
       RCON_PASSWORD: "${RCON_PASSWORD:?set RCON_PASSWORD in .env}"
       SERVER_PORT: 25565
       RCON_PORT: 25576
@@ -76,6 +76,11 @@ services:
       # — CurseForge mods (requires CF_API_KEY in .env) —
       CF_API_KEY: "${CF_API_KEY:?set CF_API_KEY in .env}"
       CURSEFORGE_FILES: |-
+        cobblemon-capture-xp
+        cobblemon-integrations
+        cobblemon-playerxp
+        cobblemon-safepastures
+        create-cobblemon-balls-overhaul
         radical-cobblemon-trainers-api
         rctmod
 
@@ -90,3 +95,34 @@ services:
     volumes:
       - ./data:/data
     restart: unless-stopped
+
+  backups:
+    image: itzg/mc-backup
+    depends_on:
+      mc:
+        condition: service_healthy
+    environment:
+      BACKUP_METHOD : "restic"
+      # RCON Configuration (if needed)
+      RCON_HOST: mc
+      RCON_PASSWORD: "${RCON_PASSWORD:?set RCON_PASSWORD in .env}"
+      # since this service waits for mc to be healthy, no initial delay is needed
+      # INITIAL_DELAY: 0
+
+      # Backup Interval
+      BACKUP_INTERVAL: "3h"
+
+      # Restic Configuration
+      RESTIC_REPOSITORY: "${RESTIC_REPOSITORY:?set RESTIC_REPOSITORY in .env}"
+      RESTIC_PASSWORD: aYhxM%!%3pc%DNy8F%C&3S
+      # RESTIC_HOSTNAME: mc_server
+      RESTIC_ADDITIONAL_TAGS: mc_backups world backups neoforge  # Customize tags for filtering
+      # PRUNE_RESTIC_RETENTION: # Optional, set your retention policy (see Restic docs)
+
+      # S3 Configuration for Vultr
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID:?set AWS_ACCESS_KEY_ID in .env}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY:?set AWS_SECRET_ACCESS_KEY in .env}"
+      S3_ENDPOINT: "${S3_ENDPOINT:?set S3_ENDPOINT in .env}"
+
+    volumes:
+      - ./data:/data:ro
